@@ -1,3 +1,11 @@
+/* TODO: Prepare for multiple threads
+ *
+ * First check the file size, and it it's not in a std::unordered_map of sizes, add
+ * it. If it was in there, then hash the file that's already in the map, and add it
+ * to a std::unordered_map of hashes, and then hash the file you are currenty
+ * checking, and compare it against that map. If it's not a match, add it, if not 
+ * you know you've found a duplicate and can already print names. */
+
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
