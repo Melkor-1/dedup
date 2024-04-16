@@ -1,10 +1,15 @@
-/* TODO: Prepare for multiple threads
+/* TODO 1: Prepare for multiple threads
  *
  * First check the file size, and it it's not in a std::unordered_map of sizes, add
  * it. If it was in there, then hash the file that's already in the map, and add it
  * to a std::unordered_map of hashes, and then hash the file you are currenty
  * checking, and compare it against that map. If it's not a match, add it, if not 
- * you know you've found a duplicate and can already print names. */
+ * you know you've found a duplicate and can already print names. 
+ * 
+ * TODO 2: Use incremental hashing
+ *
+ * Hash block-wise each size group and stop as soon as a difference occurs or the 
+ * file is read fully. */
 
 #include <cstddef>
 #include <cstdint>
