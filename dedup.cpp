@@ -1,15 +1,15 @@
 /* TODO 1: Prepare for multiple threads
  *
- * First check the file size, and it it's not in a std::unordered_map of sizes, add
- * it. If it was in there, then hash the file that's already in the map, and add it
- * to a std::unordered_map of hashes, and then hash the file you are currenty
- * checking, and compare it against that map. If it's not a match, add it, if not 
- * you know you've found a duplicate and can already print names. 
- * 
+ * First check the file size, and it it's not in a std::unordered_map of sizes,
+ * add it. If it was in there, then hash the file that's already in the map, and
+ * add it to a std::unordered_map of hashes, and then hash the file you are
+ * currenty checking, and compare it against that map. If it's not a match, add
+ * it, if not you know you've found a duplicate and can already print names.
+ *
  * TODO 2: Use incremental hashing
  *
- * Hash block-wise each size group and stop as soon as a difference occurs or the 
- * file is read fully. */
+ * Hash block-wise each size group and stop as soon as a difference occurs or
+ * the file is read fully. */
 
 #include <cstddef>
 #include <cstdint>
@@ -88,14 +88,9 @@ static void populate_size_map(
                           << std::error_code {errno, std::generic_category()}
                                  .message()
                           << "\n";
-            }
-            else {
+            } else {
                 size_map.emplace(fsize, entry.path().string());
             }
-        }
-        else {
-            std::cerr << "Skipping entry: "
-                      << std::quoted(entry.path().string()) << "\n";
         }
     }
 }
@@ -121,8 +116,7 @@ static bool populate_hash_map(
 
             if (hash != std::nullopt) {
                 hash_map.emplace(hash.value(), it->second);
-            }
-            else {
+            } else {
                 std::cerr << "error: failed to process "
                           << std::quoted(it->second) << "\n";
             }
@@ -154,8 +148,7 @@ print_duplicates(std::unordered_multimap<std::string, std::string>& hash_map)
     for (auto it {hash_map.begin()}; it != hash_map.end(); ++it) {
         if (curr_key == it->first) {
             continue;
-        }
-        else {
+        } else {
             curr_key = it->first;
         }
         const auto res {hash_map.equal_range(it->first)};
@@ -178,6 +171,8 @@ int main(int argc, char** argv)
                   << "file1 file2 ...\n";
         return EXIT_FAILURE;
     }
+
+    std::cout << "Building file list.." << "\n";
 
     std::unordered_multimap<std::uintmax_t, std::string> size_map {};
     std::unordered_multimap<std::string, std::string> hash_map {};
