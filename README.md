@@ -4,11 +4,19 @@
 
 Walks through a directory, adding all files to a map. Then, for every set of files with the same size, it hashes each file and lists the duplicates along with their corresponding hashes.
 
-For a sample of 14277 files, around 3.5 G:
+For a sample of 14287 files, around 3.5 G:
 
-* `rmlint`: 0.03s 
-* `fdupes -r`: 0.45s
-* `dedup`: 0.69s
+* `rmlint -r`: 0m9.553s 
+* `fdupes -r`: 0m14.612s
+* `dedup`: 0m11.646s
+
+### Note
+
+Before each run, disk caches were cleared:
+
+```shell
+$ free && sync && echo 3 >| /proc/sys/vm/drop_caches && free
+```
 
 ## Building:
 
